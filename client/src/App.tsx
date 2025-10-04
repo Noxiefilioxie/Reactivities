@@ -16,7 +16,6 @@ function App() {
   }, [])
 
   return (
-
     <>
       <Typography variant="h3" >Reactivities</Typography>
       <List>
