@@ -1,0 +1,76 @@
+import { Box, Container, CssBaseline } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
+
+function App() {
+
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    axios.get<Activity[]>('https://localhost:5001/api/activities')
+      .then(response => {
+        setActivities(response.data);
+        return () => { }
+      })
+
+  }, [])
+
+  const handleSelectActivity = (id: string) => {
+    setSelectedActivity(activities.find(x => x.id === id));
+  }
+
+  const handleCancelSelectActivity = () => {
+    console.log('cancel select activity');
+    setSelectedActivity(undefined);
+  }
+
+  const handleOpenForm = (id?: string) => {
+    id ? handleSelectActivity(id) : handleCancelSelectActivity();
+    setEditMode(true);
+  }
+
+  const handleCloseForm = () => {
+    setEditMode(false);
+  }
+
+  const handleSubmitForm = (activity: Activity) => {
+    if (activity.id) {
+      setActivities(activities.map(a => a.id === activity.id ? activity : a));
+    }
+    else {
+      activity.id = crypto.randomUUID();
+      setActivities([...activities, { ...activity, id: crypto.randomUUID() }]);
+      setSelectedActivity(activity);
+    }
+    setEditMode(false);
+  }
+
+  const handleDeleteActivity = (id: string) => {
+    setActivities(activities.filter(x => x.id !== id));
+  }
+
+  return (
+    <Box sx={{ bgcolor: '#eeeeee' }}>
+      <CssBaseline />
+      <NavBar openForm={handleOpenForm} />
+      <Container maxWidth='xl' sx={{ mt: 3 }}>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          cancelSelectActivity={handleCancelSelectActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          openForm={handleOpenForm}
+          closeForm={handleCloseForm}
+          submitForm={handleSubmitForm}
+          deleteActivity={handleDeleteActivity}
+        />
+      </Container>
+    </Box>
+  )
+}
+export default App
