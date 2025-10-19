@@ -1,6 +1,6 @@
 import { CalendarToday, Info, Place } from "@mui/icons-material";
 import { Divider, Grid2, Paper, Typography } from "@mui/material";
-import { formatDate } from "../../../lib/types/util/util";
+import { formatDate } from "../../../lib/util/util";
 
 type Props = {
   activity: Activity;

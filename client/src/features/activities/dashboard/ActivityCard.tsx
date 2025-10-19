@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Card, CardContent, CardHeader, Chip, Divider, Typography } from "@mui/material"
 import { AccessTime, Place } from "@mui/icons-material";
 import { Link } from "react-router";
-import { formatDate } from "../../../lib/types/util/util";
+import { formatDate } from "../../../lib/util/util";
 
 type Props = {
   activity: Activity

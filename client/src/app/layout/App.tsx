@@ -11,9 +11,7 @@ function App() {
     <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
       <CssBaseline />
       {location.pathname === '/' ? <Home /> : (
-
         <>
-
           <NavBar />
           <Container maxWidth='xl' sx={{ mt: 3 }}>
             <Outlet />
