@@ -10,7 +10,7 @@ export const useActivities = (id?: string) => {
     queryFn: async () => {
       const response = await agent.get<Activity[]>('/activities');
       return response.data;
-    }
+    },
   });
 
   const { data: activity, isLoading: isLoadingActivity } = useQuery({
